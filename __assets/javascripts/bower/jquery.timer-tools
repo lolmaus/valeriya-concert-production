@@ -1,0 +1,78 @@
+
+/*!
+jquery.timer-tools v0.1.0
+by Andrey Mikhaylov (lolmaus) lolmaus@gmail.com
+inspired by https://code.google.com/p/jquery-debounce/
+MIT license
+ */
+
+(function() {
+  var __slice = [].slice;
+
+  $.extend({
+    delay: function(msTimeout, callback) {
+      return setTimeout(callback, msTimeout);
+    },
+    debounceLast: function(msTimeout, context, callback) {
+      var timer, _ref;
+      if (arguments.length < 2) {
+        throw "debounceLast called with less than two arguments";
+      } else if (arguments.length === 2) {
+        _ref = [void 0, context], context = _ref[0], callback = _ref[1];
+      }
+      timer = null;
+      return function() {
+        var args;
+        args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+        context = context || this;
+        clearTimeout(timer);
+        return timer = $.delay(msTimeout, function() {
+          callback.apply(context, args);
+          return timer = null;
+        });
+      };
+    },
+    debounceFirst: function(msTimeout, context, callback) {
+      var timer, _ref;
+      if (arguments.length < 2) {
+        throw "debounceLast called with less than two arguments";
+      } else if (arguments.length === 2) {
+        _ref = [void 0, context], context = _ref[0], callback = _ref[1];
+      }
+      timer = null;
+      return function() {
+        var args;
+        args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+        context = context || this;
+        if (!timer) {
+          callback.apply(context, args);
+        }
+        clearTimeout(timer);
+        return timer = $.delay(msTimeout, function() {
+          return timer = null;
+        });
+      };
+    },
+    throttle: function(msTimeout, context, callback) {
+      var timer, _ref;
+      if (arguments.length < 2) {
+        throw "debounceLast called with less than two arguments";
+      } else if (arguments.length === 2) {
+        _ref = [void 0, context], context = _ref[0], callback = _ref[1];
+      }
+      timer = null;
+      return function() {
+        var args;
+        args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+        context = context || this;
+        if (!timer) {
+          callback.apply(context, args);
+          return timer = $.delay(msTimeout, function() {
+            return timer = null;
+          });
+        }
+      };
+    }
+  });
+
+}).call(this);
