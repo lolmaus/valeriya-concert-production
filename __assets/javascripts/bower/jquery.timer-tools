@@ -68,7 +68,6 @@ MIT license
         if (!timer) {
           callback.apply(context, args);
           return timer = $.delay(msTimeout, function() {
-            callback.apply(context, args);
             return timer = null;
           });
         }
